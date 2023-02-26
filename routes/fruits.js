@@ -19,3 +19,5 @@ let fruits = [
         color: "Purple"
     },
 ]
+
+module.exports = router
