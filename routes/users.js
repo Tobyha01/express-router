@@ -19,6 +19,18 @@ let users = [
     }
 ]
 
+router.use(express.json())
+
+router.post("/", async function(request, response) {
+    try{
+        const user = users.push(request.body)
+        response.status(200).send(users)
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
+
 router.get("/", function(request, response) {
     try{
         response.status(200).send(users)
@@ -32,6 +44,26 @@ router.get("/:id", function(request, response) {
     try{
         const user = users[request.params.id -1]
         response.status(200).send(user)
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
+
+router.put("/:id", function(request, response) {
+    try{
+        users[request.params.id -1] = request.body
+        response.status(200).send(users)
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
+
+router.delete("/:id", function(request, response) {
+    try{
+        const user = users.splice([request.params.id -1], 1)
+        response.status(200).send(user) 
     }
     catch(error){
         response.status(500).send({error: error.message})
