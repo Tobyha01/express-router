@@ -1,5 +1,7 @@
 const express = require("express")
 const router = express.Router()
+const {check, validationResult} = require("express-validator")
+
 let users = [
     {
         name: "User 1",
@@ -21,10 +23,17 @@ let users = [
 
 router.use(express.json())
 
-router.post("/", async function(request, response) {
+router.post("/", [check("name").trim(" ").not().isEmpty()], async function(request, response) {
     try{
-        const user = users.push(request.body)
-        response.status(200).send(users)
+        const user = request.body
+        users.push(request.body)
+        const errors = validationResult(request)
+        if(!errors.isEmpty()){
+            response.status(400).send(errors/* , {errors: errors['msg'] = "Please Enter Required Input!"} */)
+        }
+        else{
+            response.status(200).send({user, users})
+        }
     }
     catch(error){
         response.status(500).send({error: error.message})
