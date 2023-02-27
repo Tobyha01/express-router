@@ -61,4 +61,14 @@ router.put("/:id", function(request, response) {
     }
 })
 
+router.delete("/:id", function(request, response) {
+    try{
+        const fruit = fruits.splice([request.params.id -1], 1)
+        response.status(200).send({fruit, fruits})
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
+
 module.exports = router
