@@ -1,5 +1,5 @@
 const express = require("express")
-const router = express.router()
+const router = express.Router()
 let users = [
     {
         name: "User 1",
@@ -18,5 +18,24 @@ let users = [
         age: 22
     }
 ]
+
+router.get("/", async function(request, require) {
+    try{
+        response.status(200).send(users)
+    }
+    catch(error){
+     response.status(500).send({error: error.message})
+    }
+})
+
+router.get("/:id", function(request, response) {
+    try{
+        const user = users[request.params.id -1]
+        response.status(200).send(user)
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
 
 module.exports = router
