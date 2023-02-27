@@ -49,4 +49,16 @@ router.get("/:id", function(request, response) {
     }
 })
 
+router.put("/:id", function(request, response) {
+    try{
+        // let fruit = fruits[request.params.id -1]
+        // fruit = request.body
+        fruits[request.params.id -1] = request.body
+        response.status(200).send(fruits)
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
+
 module.exports = router
