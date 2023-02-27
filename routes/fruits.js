@@ -19,6 +19,16 @@ let fruits = [
         color: "Purple"
     },
 ]
+router.use(express.json())
+router.post("/", function(request, response) {
+    try{
+        fruits.push(request.body)
+        response.status(200).send(fruits)
+    }
+    catch(error){
+        response.status(500).send({error: error.message})
+    }
+})
 
 router.get("/", function(request, response) {
     try{
