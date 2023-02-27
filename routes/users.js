@@ -19,7 +19,7 @@ let users = [
     }
 ]
 
-router.get("/", async function(request, require) {
+router.get("/", function(request, require) {
     try{
         response.status(200).send(users)
     }
